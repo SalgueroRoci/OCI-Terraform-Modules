@@ -63,7 +63,14 @@ In this step we will set up our `provider.tf` file to allow us to authenticate i
 
 ## Step 1: Creating the VCN
 
-Our code for creating a VCN and subnet was adapted using the template found [here](https://gist.github.com/lucassrg/9b97fb224cb4882d7db6b04a5b048ea8). 
+Our code for creating a VCN and subnet was adapted using the template found [here](https://gist.github.com/lucassrg/9b97fb224cb4882d7db6b04a5b048ea8). We open port 80, 3000, 5000, and 1521 because the web application we would migrate use them.
+
+In `main.tf` we pass the variables `user_ocid`, `tenancy_ocid`, `compartment_ocid`, `ssh_public_key_path`, `ssh_private_key_path`, `fingerprint`, `region`, and `availability_domain`. 
+
+***IMPORTANT:*** We have hard-coded our `region` variable as "ad-ashburn-1." If your tenancy is in, for example, "us-phoenix-1", then you must change the value of `region`. Furthermore, we have decided as a preference to zero-index our availability domains. For example AD-1 is mapped to 0, AD-2 to 1, and AD-2 to 2. Therefore, since we want to use AD-1, our `availability_domain` variable returns 0.
+
+### A Brief Intro to Output Variables
+
 
 ## Step 2: Creating the Bucket
 
