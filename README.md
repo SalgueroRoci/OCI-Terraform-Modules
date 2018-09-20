@@ -71,6 +71,12 @@ Our code for creating a VCN and subnet was adapted using the template found [her
 
 ## Step 4: Exporting the Custom Image
 
+We used the OCI CLI (command line interface) to export an image onto a bucket with this command:
+
+`oci compute image export to-object --image-id [OCID of image] -ns [OCI namespace] -bn [bucket name] --name [name of new object]`
+
+
+
 ## Step 5: Migrating the Custom Image
 
 ## Step 6: Creating a Compute Instance
