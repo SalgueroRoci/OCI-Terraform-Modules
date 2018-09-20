@@ -71,6 +71,7 @@ In `main.tf` we pass the variables `user_ocid`, `tenancy_ocid`, `compartment_oci
 
 ### A Brief Intro to Output Variables
 
+In `modules/vcn` we also have an `outputs.tf` [file](/modules/vcn/outputs.tf). We are outputting a variable called `subnet_ocid` which we will use later when we compute an instance. This is very helpful, because without the ability to output variables, we would have to run the vcn module, pause to find OCID of the subnet we just created, manually pass it to our compute module, and then run the compute module. By outputting the variable, we can run modules one after another even if one module is dependent on another module. We can reference the `subnet_ocid` variable in `main.tf` as `modules.vcn.subnet_ocid`. We will use more output variables later in the tutorial. Read more about output variables [here](https://www.terraform.io/intro/getting-started/outputs.html)
 
 ## Step 2: Creating the Bucket
 
