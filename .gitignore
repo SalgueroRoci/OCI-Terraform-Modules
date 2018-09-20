@@ -1,4 +1,11 @@
-.*
+.oci
+.ssh
+.terraform.d
+.vim
+.viminfo
+.rnd
+.main.tf.swap
+.cache
 .terraform
 terraform.tfvars
 terraform.tfstate
