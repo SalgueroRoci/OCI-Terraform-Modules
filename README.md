@@ -31,6 +31,7 @@ We split our Terraform project into modules, which can be thought of as smaller 
 ```
 main.tf
 vars.tf
+provider.tf
 terraform.tfvars
 modules
  |
@@ -54,7 +55,15 @@ In `main.tf` we run each module sequentially, starting with the `vcn` module, an
 
 `compute` - Create a new instance with the recently migrated image.
 
+## Step 0: Configuring the Provider
+
+Don't forget to configure your `terraform.tfvars` file beforehand!
+
+In this step we will set up our `provider.tf` file to allow us to authenticate into OCI. If we did not have this file, then we would have to run our authentication code for every module we run. This way, we only need to authenticate once. Read the `provider.tf` [file](provider.tf) for a better idea on how to format it. For more information, click [here](https://www.terraform.io/docs/configuration/providers.html) (Note: this link uses AWS in their examples).
+
 ## Step 1: Creating the VCN
+
+Our code for creating a VCN and subnet was adapted using the template found [here](https://gist.github.com/lucassrg/9b97fb224cb4882d7db6b04a5b048ea8). 
 
 ## Step 2: Creating the Bucket
 
