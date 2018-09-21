@@ -95,10 +95,10 @@ The OCI CLI reference guide can be found [here](https://docs.cloud.oracle.com/ia
 
 ## Step 5: Migrating the Custom Image from Bucket to Compute
 
-We used the example called "Create image from exported image via direct access to object store" (here)[https://www.terraform.io/docs/providers/oci/r/core_image.html]. We also outputted the OCID of the image for creating the compute instance later. Hope this is clear!
+We used the example called "Create image from exported image via direct access to object store" [here](https://www.terraform.io/docs/providers/oci/r/core_image.html). We also outputted the OCID of the image for creating the compute instance later. Hope this is clear!
 
 ## Step 6: Creating a Compute Instance
 
-Finally, we create the compute mostly using code from Abhiram Ampabathina (here)[https://github.com/mrabhiram/terraform-oci-sample/tree/master/modules/compute-instance] (we barely wrote any original code as you can probably tell, but we never really tread any new ground to require new code. As long as you have a good understanding of Terraform, we believe it's okay. And even if you don't, looking at example code is a good way to learn ☺️).
+Finally, we create the compute mostly using code from Abhiram Ampabathina [here](https://github.com/mrabhiram/terraform-oci-sample/tree/master/modules/compute-instance) (we barely wrote any original code as you can probably tell, but we never really tread any new ground that required new code. As long as you have a good understanding of Terraform, we believe it's okay. And even if you don't, looking at example code is a good way to learn ☺️).
 
 Anyway, this IaaSathon was a great learning experience and deep dive into Terraform. It is clear how powerful this tool is for DevOps. We hope this walkthrough was useful!
