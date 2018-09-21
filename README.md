@@ -79,14 +79,22 @@ Bucket creation is quite simple to do once you're familiarized with the Terrafor
  
 ## Step 3: Creating the Custom Image
 
-## Step 4: Exporting the Custom Image
+Our custom image file [here](/modules/create_image/create_image.tf) is super sparse and hopefully is easy to understand. All it requires is the instance OCID, the compartment OCID, and a display name for the newly created image. It will take a little time to create the image depending on how large it is.
 
-We used the OCI CLI (command line interface) to export an image onto a bucket with this command:
+## Step 4: Exporting the Custom Image to a Bucket
+
+Unfortunately we did not find an elegant way to export a custom image onto a bucket through Terraform, so we have to step out of it shortly to use the OCI CLI. We played around with using Terraform's [local-exec](https://www.terraform.io/docs/provisioners/local-exec.html) tool to run OCI CLI commands through Terraform, but since the CLI is unable to send a response when the upload to the bucket is complete, we could not reliably depend on it as it could cause dependency issues.
+
+Use the OCI CLI (command line interface) to export an image onto a bucket with this command:
 
 `oci compute image export to-object --image-id [OCID of image] -ns [OCI namespace] -bn [bucket name] --name [name of new object]`
 
+The OCI CLI reference guide can be found [here](https://docs.cloud.oracle.com/iaas/tools/oci-cli/latest/oci_cli_docs/index.html). We recommend learning how to use it; it's actually quite intuitive!
 
+NOTE: Our team has decided to just migrate the image just through the OCI ecosystem. Other teams have instead downloaded the image onto their local environment and used Terraform/CLI/API/SDK (there are many ways to do this!) to upload the file from their local machine to a bucket. A Terraform way can be found [here](https://www.terraform.io/docs/providers/oci/r/object_storage_object.html#) and by providing the `source` variable.
 
 ## Step 5: Migrating the Custom Image
+
+
 
 ## Step 6: Creating a Compute Instance
