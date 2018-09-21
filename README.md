@@ -24,6 +24,8 @@ instance_ocid = [OCID of the instance to create a custom image of and then migra
 
 These values are passed onto `vars.tf` and is mainly used in `main.tf`.
 
+Also, this walkthrough requires the installation of the OCI CLI. Please have that installed before continuing.
+
 ## Terraform Structure
 
 We split our Terraform project into modules, which can be thought of as smaller Terraform functions. A module will be in its own separate folder in the `modules` directory.
@@ -61,7 +63,7 @@ Don't forget to configure your `terraform.tfvars` file beforehand!
 
 In this step we will set up our `provider.tf` file to allow us to authenticate into OCI. If we did not have this file, then we would have to run our authentication code for every module we run. This way, we only need to authenticate once. Read the `provider.tf` [file](provider.tf) for a better idea on how to format it. For more information, click [here](https://www.terraform.io/docs/configuration/providers.html) (Note: this link uses AWS in their examples).
 
-Our `main.tf` file is what we will use to run all our modules. Every time we want to add a module we use this block:
+Our `main.tf` [file](main.tf) is what we will use to run all our modules. Every time we want to add a module we use this block:
 
 ```
 module "module_name_1" {
@@ -72,6 +74,8 @@ module "module_name_1" {
 }
 ```
 In this code we set a path to the module and pass in variables the module requires. These variables should be set beforehand `vars.tf` and `terraform.tfvars` (especially if they are sensitive) but you can also hard code them like in `example_variable_2`. There is an example of how to pass in external variables outputted by a module in `example_variable_3`. We will get to that later.
+
+To initialize the Terraform project, call `terraform init` on your command line. To see how the project would change your OCI infrastructure call `terraform plan`. To apply these changes, run `terraform apply`
 
 
 ## Step 1: Creating the VCN
