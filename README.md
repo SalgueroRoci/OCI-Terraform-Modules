@@ -63,7 +63,7 @@ In this step we will set up our `provider.tf` file to allow us to authenticate i
 
 ## Step 1: Creating the VCN
 
-Our code for creating a VCN and subnet was adapted using the template found [here](https://gist.github.com/lucassrg/9b97fb224cb4882d7db6b04a5b048ea8). We open port 80, 3000, 5000, and 1521 because the web application we would migrate use them.
+Our code for creating a VCN and subnet was adapted using the template found [here](https://gist.github.com/lucassrg/9b97fb224cb4882d7db6b04a5b048ea8). We open port 80, 3000, 5000, and 1521 because our web application we would migrate needs them. 
 
 In `main.tf` we pass the variables `user_ocid`, `tenancy_ocid`, `compartment_ocid`, `ssh_public_key_path`, `ssh_private_key_path`, `fingerprint`, `region`, and `availability_domain`. 
 
