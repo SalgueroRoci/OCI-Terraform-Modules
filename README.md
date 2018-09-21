@@ -71,7 +71,9 @@ In `main.tf` we pass the variables `user_ocid`, `tenancy_ocid`, `compartment_oci
 
 ### A Brief Intro to Output Variables
 
-In `modules/vcn` we also have an `outputs.tf` [file](/modules/vcn/outputs.tf). We are outputting a variable called `subnet_ocid` which we will use later when we compute an instance. This is very helpful, because without the ability to output variables, we would have to run the vcn module, pause to find OCID of the subnet we just created, manually pass it to our compute module, and then run the compute module. By outputting the variable, we can run modules one after another even if one module is dependent on another module. We can reference the `subnet_ocid` variable in `main.tf` as `modules.vcn.subnet_ocid`. We will use more output variables later in the tutorial. Read more about output variables [here](https://www.terraform.io/intro/getting-started/outputs.html)
+In `modules/vcn` we also have an `outputs.tf` [file](/modules/vcn/outputs.tf). We are outputting a variable called `subnet_ocid` which we will use later when we compute an instance. This is very helpful, because without the ability to output variables, we would have to run the vcn module, pause to find OCID of the subnet we just created, manually pass it to our compute module, and then run the compute module. By outputting the variable, we can run modules one after another even if one module is dependent on another module. Terraform will understand there is an implicit dependency between those modules (you cannot yet state explicit dependencies between module). We can reference the `subnet_ocid` variable in `main.tf` as `modules.vcn.subnet_ocid`. We will use more output variables later in the tutorial. Read more about output variables [here](https://www.terraform.io/intro/getting-started/outputs.html)
+
+Also learn more about dependencies [here](https://www.terraform.io/intro/getting-started/dependencies.html). They're also important to know!
 
 ## Step 2: Creating the Bucket
 
@@ -101,4 +103,5 @@ We used the example called "Create image from exported image via direct access t
 
 Finally, we create the compute mostly using code from Abhiram Ampabathina [here](https://github.com/mrabhiram/terraform-oci-sample/tree/master/modules/compute-instance) (we barely wrote any original code as you can probably tell, but we never really tread any new ground that required new code. As long as you have a good understanding of Terraform, we believe it's okay. And even if you don't, looking at example code is a good way to learn ☺️).
 
-Anyway, this IaaSathon was a great learning experience and deep dive into Terraform. It is clear how powerful this tool is for DevOps. We hope this walkthrough was useful!
+## Conclusion
+It has been made clear through this lab how powerful and useful Terraformis is for DevOps and cloud developers. If we had more time, we would like to find a solution to download files on OCI and upload them all through Terraform (maybe by utilizing the OCI Python SDK?). Anyway, this IaaSathon was a great learning experience and deep dive into Terraform. We hope this walkthrough was useful!
