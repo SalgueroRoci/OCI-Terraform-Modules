@@ -55,11 +55,24 @@ In `main.tf` we run each module sequentially, starting with the `vcn` module, an
 
 `compute` - Create a new instance with the recently migrated image.
 
-## Step 0: Configuring the Provider
+## Step 0: Configuring the Provider and Main File
 
 Don't forget to configure your `terraform.tfvars` file beforehand!
 
 In this step we will set up our `provider.tf` file to allow us to authenticate into OCI. If we did not have this file, then we would have to run our authentication code for every module we run. This way, we only need to authenticate once. Read the `provider.tf` [file](provider.tf) for a better idea on how to format it. For more information, click [here](https://www.terraform.io/docs/configuration/providers.html) (Note: this link uses AWS in their examples).
+
+Our `main.tf` file is what we will use to run all our modules. Every time we want to add a module we use this block:
+
+```
+module "module_name_1" {
+  source = [insert path to folder of module]
+  example_variable_1 = "${var.example_variable_1}"
+  example_variable_2 = "hard coded variable"
+  example_variable_3 = "${module.example_module.example_variable}"
+}
+```
+In this code we set a path to the module and pass in variables the module requires. These variables should be set beforehand `vars.tf` and `terraform.tfvars` (especially if they are sensitive) but you can also hard code them like in `example_variable_2`. There is an example of how to pass in external variables outputted by a module in `example_variable_3`. We will get to that later.
+
 
 ## Step 1: Creating the VCN
 
