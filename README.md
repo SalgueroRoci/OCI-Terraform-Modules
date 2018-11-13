@@ -22,6 +22,8 @@ cloud_compartment_ocid = [OCID of the destination compartment]
 instance_ocid = [OCID of the instance to create a custom image of and then migrate]
 ```
 
+NOTE: All these variables should be in strings using double quotes. The `private_key_path` is the path to the PEM private key generated for users. The `ssh_public_key` should be the actual public SSH key, not the path to it.
+
 These values are passed onto `vars.tf` and is mainly used in `main.tf`.
 
 Also, this walkthrough requires the installation of the OCI CLI. Please have that installed before continuing.
