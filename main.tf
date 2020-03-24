@@ -1,46 +1,49 @@
 module "vcn" {
   source = "./modules/vcn"
-  user_ocid = "${var.user_ocid}"
-  tenancy_ocid = "${var.tenancy_ocid}"
-  compartment_ocid = "${var.cloud_compartment_ocid}"
-  ssh_public_key_path = "${var.ssh_public_key_path}"
-  ssh_private_key_path = "{var.ssh_private_key_path}"
-  fingerprint = "${var.fingerprint}"
+  compartment_ocid = "${var.compartment_ocid}"
   region = "us-ashburn-1"
   availability_domain = "${var.availability_domain}"
 }
 
-module "bucket" {
-  source = "./modules/bucket"
-  compartment_ocid = "${var.cloud_compartment_ocid}"
-}
-
-module "create_image" {
-  source = "./modules/create_image"
-  compartment_ocid = "${var.customer_compartment_ocid}"
-  instance_ocid = "${var.instance_ocid}"
-  display_name = "image_9_20_18"
-
-}
-
-module "image_migration" {
-  source = "./modules/image_migration"
-  compartment_ocid = "${var.cloud_compartment_ocid}"
-  bucket_name = "tf-example-bucket"
-  namespace = "gse00015177"
-  object_name = "image_9_20_18"
- 
-  display_name = "image_9_20_18"
-}
-
-module "compute" {
+module "ebscompute" {
   source = "./modules/compute"
-  compartment_ocid = "${var.cloud_compartment_ocid}"
-  compute_display_name = "compute_test"
-  instance_shape = "VM.DenseIO1.4"
-  image_ocid = "${module.image_migration.image_ocid}"
-  subnet_ocid = "${module.vcn.subnet_ocid}"
-  ssh_public_key = "${var.ssh_public_key}"
+  compartment_ocid = "${var.compartment_ocid}"
   tenancy_ocid = "${var.tenancy_ocid}"
+  subnet_ocid = "${module.vcn.private_subnet_ocid}"
   availability_domain = "${var.availability_domain}"
+  region = "${var.region}"
+  instance_image_ocid = "${var.instance_image_ocid}"
+
+  ssh_public_key = "${var.ssh_public_key}"
+  instance_shape = "VM.Standard2.2"
+  compute_display_name = "EBS Compute"
+  instance__boot_volume_size = "300"
 }
+output "ebsinfo" {
+  value = "${module.ebscompute.public_ip}"
+}
+module "bastion" {
+  source = "./modules/compute"
+  compartment_ocid = "${var.compartment_ocid}"
+  tenancy_ocid = "${var.tenancy_ocid}"
+  subnet_ocid = "${module.vcn.public_subnet_ocid}"
+  availability_domain = "${var.availability_domain}"
+  region = "${var.region}"
+  instance_image_ocid = "${var.instance_image_ocid}"
+
+  ssh_public_key = "${var.ssh_public_key}"
+  instance_shape = "VM.StandardE2.1"
+  compute_display_name = "EBS Bastion"
+  instance__boot_volume_size = "50"
+}
+
+# module "block" {
+#   source = "./modules/block"
+#   compartment_ocid = "${var.cloud_compartment_ocid}"
+#   tenancy_ocid = "${var.tenancy_ocid}"
+#   compartment_ocid = "${var.cloud_compartment_ocid}"
+#   instance_ocid = "${module.compute.instance_ocid}"
+#   availability_domain = "${var.availability_domain}"
+#   ssh_private_key = "${file(var.ssh_private_key_path)}"
+#   public_ip = "${module.compute.public_ip}"
+# }
