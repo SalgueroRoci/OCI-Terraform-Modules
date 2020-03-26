@@ -1,22 +1,11 @@
 variable "compartment_ocid" {}
 variable "availability_domain" {}
 variable "region" {}
-
 # prefix for all the resources
-variable "prefix" {
-  default = "EBS"
-}
-
-variable "vcn_cidr_block" {
-  default = "192.168.0.0/24"
-}
-
-variable "pub_subnet_cidr_block" {
-  default = "192.168.0.0/28"
-}
-variable "EBS_subnet_cidr_block" {
-  default = "192.168.0.16/28"
-}
+variable "prefix" {}
+variable "vcn_cidr_block" {}
+variable "pub_subnet_cidr_block" {}
+variable "priv_subnet_cidr_block" {}
 
 resource "oci_core_virtual_network" "vcn" {
   cidr_block     = "${var.vcn_cidr_block}"
@@ -50,7 +39,7 @@ resource "oci_core_route_table" "rt_private" {
 
 resource "oci_core_subnet" "subnet_private" {
   display_name        = "${var.prefix}-subnet-private"
-  cidr_block          = "${var.EBS_subnet_cidr_block}"
+  cidr_block          = "${var.priv_subnet_cidr_block}"
   compartment_id      = "${var.compartment_ocid}"
   vcn_id              = "${oci_core_virtual_network.vcn.id}"
 
@@ -81,30 +70,6 @@ resource "oci_core_security_list" "private_security_list" {
   egress_security_rules {
     destination = "${var.vcn_cidr_block}"
     protocol    = "6" //tcp
-  }
-
-  // allow inbound http EBS port
-  ingress_security_rules {
-    protocol  = "6"         // tcp
-    source    = "${var.pub_subnet_cidr_block}"
-    stateless = false
-
-    tcp_options {
-      "min" = 8000
-      "max" = 8000
-    }
-  }
-
-  // allow inbound traffic to port weblogic (vnc)
-  ingress_security_rules {
-    protocol  = "6"         // tcp
-    source    = "${var.pub_subnet_cidr_block}"
-    stateless = false
-
-    tcp_options {
-      "min" = 7001
-      "max" = 7001
-    }
   }
 
   // allow inbound ssh traffic
@@ -155,17 +120,6 @@ resource "oci_core_security_list" "public_security_list" {
     protocol    = "6" //tcp
   }
 
-  // allow inbound http EBS port
-  ingress_security_rules {
-    protocol  = "6"         // tcp
-    source    = "0.0.0.0/0"
-    stateless = false
-
-    tcp_options {
-      "min" = 8000
-      "max" = 8000
-    }
-  }
 
   # // allow inbound traffic to port weblogic (vnc)
   # ingress_security_rules {
@@ -174,8 +128,8 @@ resource "oci_core_security_list" "public_security_list" {
   #   stateless = false
 
   #   tcp_options {
-  #     "min" = 7001
-  #     "max" = 7001
+  #     "min" = 000
+  #     "max" = 000
   #   }
   # }
 
@@ -188,18 +142,6 @@ resource "oci_core_security_list" "public_security_list" {
     tcp_options {
       "min" = 22
       "max" = 22
-    }
-  }
-
-  // allow inbound database traffic
-  ingress_security_rules {
-    protocol  = "6"         // tcp
-    source    = "0.0.0.0/0"
-    stateless = false
-
-    tcp_options {
-      "min" = 1521
-      "max" = 1521
     }
   }
 

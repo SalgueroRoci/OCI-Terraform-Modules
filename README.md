@@ -1,6 +1,7 @@
 # Terraform OCI Provider
 
 Terraform module template for OCI provider. Example for creating VCN, compute, and block.
+Terraform OCI provider was updated to 3.0.0.
 
 ## Before We Begin
 
@@ -49,6 +50,8 @@ In `main.tf` we run each module sequentially, starting with the `vcn` module, an
 
 `compute` - Create a new instance.
 
+`block` - Creates a new block volume.
+
 ## Step 0: Configuring the Provider and Main File
 
 Don't forget to configure your `terraform.tfvars` file beforehand!
@@ -84,9 +87,13 @@ In `modules/vcn` we also have an `outputs.tf` [file](/modules/vcn/outputs.tf). W
 
 Also learn more about dependencies [here](https://www.terraform.io/intro/getting-started/dependencies.html). They're also important to know!
 
-## Step 6: Creating a Compute Instance
+## Step 2: Creating a Compute Instance
 
 Finally, we create the compute mostly using code from Abhiram Ampabathina [here](https://github.com/mrabhiram/terraform-oci-sample/tree/master/modules/compute-instance) (we barely wrote any original code as you can probably tell, but we never really tread any new ground that required new code. As long as you have a good understanding of Terraform, we believe it's okay. And even if you don't, looking at example code is a good way to learn ☺️).
+
+## Step 3: Create Block Volume
+
+Finally we create a a block volume to extend storage of a compute. Documentation [here](https://www.terraform.io/docs/providers/oci/r/core_volume.html). After creating block volume, just attach to the compute instance and run ISCSI commands. 
 
 ## Conclusion
 It has been made clear through this lab how powerful and useful Terraform is for DevOps and cloud developers. We hope this walkthrough was useful!
