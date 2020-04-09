@@ -17,8 +17,7 @@ private_key_path= [Path to OCI private key file]
 ssh_public_key_path = [Path to public ssh key]
 ssh_private_key_path = [Path to private ssh key]
 ssh_public_key = [Public key]
-region = [Region of tenancy]
-customer_compartment_ocid = [OCID of the source compartment]
+region = [Region of tenancy] 
 compartment_ocid = [OCID of the destination compartment] 
 ```
 
