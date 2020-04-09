@@ -19,8 +19,7 @@ ssh_private_key_path = [Path to private ssh key]
 ssh_public_key = [Public key]
 region = [Region of tenancy]
 customer_compartment_ocid = [OCID of the source compartment]
-cloud_compartment_ocid = [OCID of the destination compartment]
-instance_ocid = [OCID of the instance to create a custom image of and then migrate]
+compartment_ocid = [OCID of the destination compartment] 
 ```
 
 These values are passed onto `vars.tf` and is mainly used in `main.tf`.
