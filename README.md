@@ -2,6 +2,7 @@
 
 Terraform module template for OCI provider. Example for creating VCN, compute, and block.
 Terraform OCI provider was updated to 3.0.0.
+Terraform v0.12.24
 
 ## Before We Begin
 
@@ -18,9 +19,8 @@ ssh_public_key_path = [Path to public ssh key]
 ssh_private_key_path = [Path to private ssh key]
 ssh_public_key = [Public key]
 region = [Region of tenancy]
-customer_compartment_ocid = [OCID of the source compartment]
-cloud_compartment_ocid = [OCID of the destination compartment]
-instance_ocid = [OCID of the instance to create a custom image of and then migrate]
+compartment_ocid = [OCID of the source compartment] 
+db_admin_password = "WElcome#123#"
 ```
 
 These values are passed onto `vars.tf` and is mainly used in `main.tf`.
@@ -38,9 +38,12 @@ provider.tf
 terraform.tfvars
 modules
  |
+ |---- compartment
  |---- vcn  
  |---- compute
- |---- block
+ |---- objectstorage
+ |---- file_storage
+ |---- database
 
 ```
 
@@ -48,9 +51,7 @@ In `main.tf` we run each module sequentially, starting with the `vcn` module, an
 
 `vcn` - Creates a new virtual cloud network, internet gateway, and a subnet with a security list
 
-`compute` - Create a new instance.
-
-`block` - Creates a new block volume.
+`compute` - Create a new instance. 
 
 ## Step 0: Configuring the Provider and Main File
 
@@ -63,9 +64,9 @@ Our `main.tf` [file](main.tf) is what we will use to run all our modules. Every 
 ```
 module "module_name_1" {
   source = [insert path to folder of module]
-  example_variable_1 = "${var.example_variable_1}"
+  example_variable_1 = var.example_variable_1
   example_variable_2 = "hard coded variable"
-  example_variable_3 = "${module.example_module.example_variable}"
+  example_variable_3 = module.example_module.example_output_variable
 }
 ```
 In this code we set a path to the module and pass in variables the module requires. These variables should be set beforehand `vars.tf` and `terraform.tfvars` (especially if they are sensitive) but you can also hard code them like in `example_variable_2`. There is an example of how to pass in external variables outputted by a module in `example_variable_3`. We will get to that later.
@@ -90,10 +91,6 @@ Also learn more about dependencies [here](https://www.terraform.io/intro/getting
 ## Step 2: Creating a Compute Instance
 
 Finally, we create the compute mostly using code from Abhiram Ampabathina [here](https://github.com/mrabhiram/terraform-oci-sample/tree/master/modules/compute-instance) (we barely wrote any original code as you can probably tell, but we never really tread any new ground that required new code. As long as you have a good understanding of Terraform, we believe it's okay. And even if you don't, looking at example code is a good way to learn ☺️).
-
-## Step 3: Create Block Volume
-
-Finally we create a a block volume to extend storage of a compute. Documentation [here](https://www.terraform.io/docs/providers/oci/r/core_volume.html). After creating block volume, just attach to the compute instance and run ISCSI commands. 
 
 ## Conclusion
 It has been made clear through this lab how powerful and useful Terraform is for DevOps and cloud developers. We hope this walkthrough was useful!
