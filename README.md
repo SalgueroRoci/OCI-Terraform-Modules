@@ -18,9 +18,14 @@ private_key_path= [Path to OCI private key file]
 ssh_public_key_path = [Path to public ssh key]
 ssh_private_key_path = [Path to private ssh key]
 ssh_public_key = [Public key]
+<<<<<<< HEAD
 region = [Region of tenancy]
 compartment_ocid = [OCID of the source compartment] 
 db_admin_password = "WElcome#123#"
+=======
+region = [Region of tenancy] 
+compartment_ocid = [OCID of the destination compartment] 
+>>>>>>> be04355488316078b135493c60b0547c0759c769
 ```
 
 These values are passed onto `vars.tf` and is mainly used in `main.tf`.
