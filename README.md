@@ -20,7 +20,7 @@ ssh_private_key_path = [Path to private ssh key]
 ssh_public_key = [Public key]
 region = [Region of tenancy] 
 compartment_ocid = [OCID of the destination compartment] 
-db_admin_password = "WElcome#123#"
+db_admin_password = [Database Password]
 ```
 
 These values are passed onto `vars.tf` and is mainly used in `main.tf`.
